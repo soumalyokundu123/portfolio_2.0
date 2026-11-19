@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Code2, Server, Database, Sparkles, Award, Cpu, ShieldCheck } from "lucide-react";
+import { Code2, Server, Database, Sparkles, Award, Cpu, ShieldCheck, Terminal, CheckCircle2, Activity } from "lucide-react";
 import type { Profile } from "@/types";
 
 interface AboutSectionProps {
@@ -11,6 +10,8 @@ interface AboutSectionProps {
 }
 
 export default function AboutSection({ profile }: AboutSectionProps) {
+  const [activeConsoleTab, setActiveConsoleTab] = useState<"runtime" | "stack" | "internships">("runtime");
+
   const stats = [
     { label: "Academic YGPA", value: "9.38" },
     { label: "Technical Internships", value: "2+" },
@@ -60,9 +61,9 @@ export default function AboutSection({ profile }: AboutSectionProps) {
           </h2>
         </div>
 
-        {/* Grid: Profile Card & Detailed Bio */}
+        {/* Grid: Developer Terminal Console & Detailed Bio */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Visual Profile Card */}
+          {/* Left Column: Interactive System Kernel Console (Replaces Photo) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -70,44 +71,156 @@ export default function AboutSection({ profile }: AboutSectionProps) {
             transition={{ duration: 0.8 }}
             className="lg:col-span-5 relative"
           >
-            {/* Subtle Radial Gradient Glow directly behind the profile card */}
+            {/* Subtle Glow directly behind the Terminal Console */}
             <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 via-violet-600/20 to-blue-500/10 rounded-3xl blur-2xl -z-10" />
 
             <div className="relative group rounded-3xl p-1 bg-gradient-to-b from-cyan-500/30 via-indigo-500/15 to-violet-500/25 shadow-2xl backdrop-blur-xl">
-              <div className="relative rounded-[22px] bg-[#0a0e1f]/90 overflow-hidden p-6 sm:p-8 border border-white/[0.06]">
-                {/* Profile Image with Cyber Frame */}
-                <div className="relative w-full aspect-square rounded-2xl overflow-hidden mb-6 border border-white/[0.1] group-hover:border-cyan-400/50 transition-colors shadow-inner">
-                  <Image
-                    src={
-                      profile?.avatarUrl ||
-                      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
-                    }
-                    alt={profile?.fullName || "Soumalyo Kundu"}
-                    fill
-                    className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
-                    sizes="(max-width: 768px) 100vw, 400px"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1f] via-transparent to-transparent opacity-85" />
+              <div className="relative rounded-[22px] bg-[#0a0e1f]/95 overflow-hidden border border-white/[0.08]">
+                {/* Terminal Window Header Bar */}
+                <div className="px-5 py-3.5 bg-[#060814]/90 border-b border-white/[0.08] flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
+                    <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
+                    <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
+                    <span className="text-[11px] font-mono text-zinc-400 pl-2">
+                      soumalyo@kernel-core:~
+                    </span>
+                  </div>
 
-                  {/* Floating Badge */}
-                  <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-[#060814]/85 backdrop-blur-md border border-white/[0.12] flex items-center justify-between shadow-lg">
-                    <div>
-                      <p className="text-xs font-semibold text-white">{profile?.fullName || "Soumalyo Kundu"}</p>
-                      <p className="text-[11px] text-cyan-300 font-mono">B.Tech CSE &bull; MCKV IE (2027)</p>
-                    </div>
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <div className="flex items-center space-x-1.5 text-[10px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>ONLINE</span>
                   </div>
                 </div>
 
-                {/* Quick Traits */}
-                <div className="grid grid-cols-2 gap-3 text-xs">
-                  <div className="p-3 rounded-xl bg-[#0f152d]/70 border border-white/[0.06] backdrop-blur-sm">
-                    <span className="text-zinc-400 block mb-1 font-mono">Focus</span>
-                    <span className="text-white font-medium">Java Backend & APIs</span>
+                {/* Console Navigation Tabs */}
+                <div className="flex border-b border-white/[0.06] bg-[#070a18]/60 px-3 pt-2">
+                  <button
+                    onClick={() => setActiveConsoleTab("runtime")}
+                    className={`px-3 py-1.5 text-[11px] font-mono rounded-t-lg transition-colors ${
+                      activeConsoleTab === "runtime"
+                        ? "bg-[#0a0e1f] text-cyan-300 border-t border-x border-cyan-500/30 font-semibold"
+                        : "text-zinc-500 hover:text-zinc-300"
+                    }`}
+                  >
+                    sys_spec.json
+                  </button>
+                  <button
+                    onClick={() => setActiveConsoleTab("stack")}
+                    className={`px-3 py-1.5 text-[11px] font-mono rounded-t-lg transition-colors ${
+                      activeConsoleTab === "stack"
+                        ? "bg-[#0a0e1f] text-cyan-300 border-t border-x border-cyan-500/30 font-semibold"
+                        : "text-zinc-500 hover:text-zinc-300"
+                    }`}
+                  >
+                    architecture.sh
+                  </button>
+                  <button
+                    onClick={() => setActiveConsoleTab("internships")}
+                    className={`px-3 py-1.5 text-[11px] font-mono rounded-t-lg transition-colors ${
+                      activeConsoleTab === "internships"
+                        ? "bg-[#0a0e1f] text-cyan-300 border-t border-x border-cyan-500/30 font-semibold"
+                        : "text-zinc-500 hover:text-zinc-300"
+                    }`}
+                  >
+                    experience.log
+                  </button>
+                </div>
+
+                {/* Terminal Body */}
+                <div className="p-5 font-mono text-xs text-zinc-300 space-y-2.5 min-h-[260px] bg-[#070b1a]/70">
+                  {activeConsoleTab === "runtime" && (
+                    <div className="space-y-2">
+                      <p className="text-zinc-500 text-[11px]">// Developer System Identity</p>
+                      <p>
+                        <span className="text-cyan-400">const</span> developer = &#123;
+                      </p>
+                      <p className="pl-4">
+                        <span className="text-zinc-400">name:</span>{" "}
+                        <span className="text-emerald-300">&quot;Soumalyo Kundu&quot;</span>,
+                      </p>
+                      <p className="pl-4">
+                        <span className="text-zinc-400">role:</span>{" "}
+                        <span className="text-cyan-300">&quot;Software Developer &bull; Java Backend&quot;</span>,
+                      </p>
+                      <p className="pl-4">
+                        <span className="text-zinc-400">education:</span>{" "}
+                        <span className="text-sky-300">&quot;MCKV Institute of Engineering (2027)&quot;</span>,
+                      </p>
+                      <p className="pl-4">
+                        <span className="text-zinc-400">ygpa:</span>{" "}
+                        <span className="text-yellow-400">9.38</span>,
+                      </p>
+                      <p className="pl-4">
+                        <span className="text-zinc-400">location:</span>{" "}
+                        <span className="text-zinc-300">&quot;Kolkata, India&quot;</span>,
+                      </p>
+                      <p className="pl-4">
+                        <span className="text-zinc-400">status:</span>{" "}
+                        <span className="text-emerald-400">&quot;Available for Software Engineering Roles&quot;</span>
+                      </p>
+                      <p>&#125;;</p>
+                    </div>
+                  )}
+
+                  {activeConsoleTab === "stack" && (
+                    <div className="space-y-2">
+                      <p className="text-zinc-500 text-[11px]">// Core Architecture & Backend Engine</p>
+                      <p className="text-cyan-400">$ systemctl --type=service</p>
+                      <p className="text-emerald-300 flex items-center space-x-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>spring-boot-3.x &bull; Java 17 Microservices</span>
+                      </p>
+                      <p className="text-emerald-300 flex items-center space-x-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>aspnetcore-webapi &bull; C# & EF Core</span>
+                      </p>
+                      <p className="text-emerald-300 flex items-center space-x-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>postgresql-db &bull; Relational ACID & Migrations</span>
+                      </p>
+                      <p className="text-emerald-300 flex items-center space-x-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>spring-security &bull; JWT & Role-Based Auth</span>
+                      </p>
+                      <p className="text-emerald-300 flex items-center space-x-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>gemini-api &bull; LLM Assistant Integrations</span>
+                      </p>
+                    </div>
+                  )}
+
+                  {activeConsoleTab === "internships" && (
+                    <div className="space-y-2">
+                      <p className="text-zinc-500 text-[11px]">// Production Engineering Experience</p>
+                      <div className="p-2 rounded bg-black/40 border border-white/[0.05]">
+                        <p className="text-cyan-300 font-semibold text-[11px]">National Informatics Centre (NIC)</p>
+                        <p className="text-zinc-400 text-[10px]">Backend Development Intern &bull; July 2026 – Present</p>
+                        <p className="text-zinc-300 text-[10px] mt-1">&rarr; Dearness Allowance (DA) Management System (C#, ASP.NET, PostgreSQL, JWT)</p>
+                      </div>
+                      <div className="p-2 rounded bg-black/40 border border-white/[0.05]">
+                        <p className="text-emerald-300 font-semibold text-[11px]">ARMB Technologies</p>
+                        <p className="text-zinc-400 text-[10px]">Java Backend Intern &bull; Feb 2026 – Aug 2026</p>
+                        <p className="text-zinc-300 text-[10px] mt-1">&rarr; ERP Scheduling & Timetable Engine (Java 17, Spring Boot, JPA, REST)</p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="pt-2 flex items-center space-x-2 text-[11px] text-cyan-400">
+                    <span>user@backend-terminal:~$</span>
+                    <span className="w-2 h-4 bg-cyan-400 animate-pulse" />
                   </div>
-                  <div className="p-3 rounded-xl bg-[#0f152d]/70 border border-white/[0.06] backdrop-blur-sm">
-                    <span className="text-zinc-400 block mb-1 font-mono">Location</span>
-                    <span className="text-white font-medium">{profile?.location || "Kolkata, India"}</span>
+                </div>
+
+                {/* Telemetry Status Bar */}
+                <div className="p-4 bg-[#060814]/90 border-t border-white/[0.08] grid grid-cols-2 gap-3 text-xs">
+                  <div className="p-2.5 rounded-xl bg-[#0e142c]/70 border border-white/[0.06] backdrop-blur-sm">
+                    <span className="text-zinc-400 block mb-0.5 font-mono text-[10px]">Architecture</span>
+                    <span className="text-white font-medium text-xs">REST & Microservices</span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-[#0e142c]/70 border border-white/[0.06] backdrop-blur-sm">
+                    <span className="text-zinc-400 block mb-0.5 font-mono text-[10px]">Response Time</span>
+                    <span className="text-emerald-400 font-medium text-xs font-mono">&lt; 15ms Optimal</span>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,28 @@
-export const FALLBACK_PROJECTS = [
+export interface FallbackProject {
+  id: string;
+  title: string;
+  slug: string;
+  tagline: string;
+  overview: string;
+  creativeProcess: string;
+  challenges: string;
+  solutions: string;
+  credits: string;
+  year: string;
+  client: string;
+  duration: string;
+  thumbnail: string;
+  videoPreview: string | null;
+  liveUrl: string | null;
+  githubUrl: string | null;
+  featured: boolean;
+  published: boolean;
+  orderIndex: number;
+  category?: { name: string; slug: string };
+  technologies: string;
+}
+
+export const FALLBACK_PROJECTS: FallbackProject[] = [
   {
     id: "proj-1",
     title: "AI Resume Roaster – ATS Resume Analyzer",
@@ -27,6 +51,7 @@ export const FALLBACK_PROJECTS = [
     technologies: "React.js, Node.js, Express.js, MongoDB, Google Gemini API, JWT, Multer, PDF-Parse, Zod, Vite, Axios",
   },
   {
+    id: "proj-2",
     title: "AI Email Assistant – AI-Powered Reply Generator & Extension",
     slug: "ai-email-assistant-generator",
     tagline: "Context-aware AI email response engine powered by Spring Boot, Google Gemini API & React Chrome Extension.",
@@ -53,6 +78,7 @@ export const FALLBACK_PROJECTS = [
     technologies: "Java, Spring Boot, React, Chrome Extension, Spring WebClient, Gemini API, Material UI, REST APIs",
   },
   {
+    id: "proj-3",
     title: "InternHub – College Internship & Recruitment Portal",
     slug: "internhub-college-internship-portal",
     tagline: "High-security university recruitment platform with role-based JWT authorization, DTO validation & PostgreSQL persistence.",
@@ -79,6 +105,7 @@ export const FALLBACK_PROJECTS = [
     technologies: "Java 17, Spring Boot, Spring Security, JWT, PostgreSQL, Hibernate, JPA, Swagger, Docker",
   },
   {
+    id: "proj-4",
     title: "CivicLens – Real-time Civic Issue Management System",
     slug: "civiclens-realtime-issue-management",
     tagline: "Geospatial public grievance tracking platform built with Next.js, Express.js, MongoDB & Tailwind CSS.",
@@ -105,6 +132,7 @@ export const FALLBACK_PROJECTS = [
     technologies: "Next.js, Express.js, MongoDB, Node.js, Tailwind CSS, REST APIs",
   },
   {
+    id: "proj-5",
     title: "Dearness Allowance (DA) Management System",
     slug: "da-management-system-nic",
     tagline: "Public sector employee administration backend built with ASP.NET Core, C#, Entity Framework Core & PostgreSQL.",
@@ -131,6 +159,7 @@ export const FALLBACK_PROJECTS = [
     technologies: "ASP.NET Core, C#, Entity Framework Core, PostgreSQL, JWT Authentication, Angular, REST APIs",
   },
   {
+    id: "proj-6",
     title: "College ERP Schedule & Timetable Engine",
     slug: "college-erp-schedule-engine-armb",
     tagline: "Automated faculty, laboratory, and classroom allocation engine built with Java 17, Spring Boot & PostgreSQL.",
