@@ -1,0 +1,235 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("ADMIN")
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id               String   @id @default(cuid())
+  fullName         String
+  title            String
+  tagline          String
+  bio              String
+  aboutDescription String
+  avatarUrl        String?
+  resumeUrl        String?
+  showreelUrl      String?
+  showreelPoster   String?
+  yearsExperience  Int      @default(3)
+  projectsCompleted Int     @default(25)
+  technologiesCount Int     @default(15)
+  clientsCount     Int      @default(12)
+  email            String
+  phone            String?
+  location         String   @default("Kolkata, India")
+  isAvailable      Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model ProjectCategory {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  projects  Project[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Project {
+  id              String          @id @default(cuid())
+  title           String
+  slug            String          @unique
+  tagline         String
+  overview        String
+  creativeProcess String?
+  challenges      String?
+  solutions       String?
+  credits         String?
+  year            String          @default("2026")
+  client          String?
+  duration        String?
+  thumbnail       String
+  videoPreview    String?
+  liveUrl         String?
+  githubUrl       String?
+  featured        Boolean         @default(false)
+  published       Boolean         @default(true)
+  orderIndex      Int             @default(0)
+  categoryId      String
+  category        ProjectCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  technologies    String
+  media           ProjectMedia[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([slug])
+  @@index([featured])
+  @@index([published])
+}
+
+model ProjectMedia {
+  id         String   @id @default(cuid())
+  projectId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  type       String   @default("IMAGE")
+  url        String
+  caption    String?
+  orderIndex Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+model SkillCategory {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  orderIndex Int      @default(0)
+  skills     Skill[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Skill {
+  id          String        @id @default(cuid())
+  name        String
+  categoryId  String
+  category    SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  proficiency Int           @default(90)
+  iconName    String?
+  featured    Boolean       @default(false)
+  orderIndex  Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([categoryId])
+}
+
+model Experience {
+  id           String    @id @default(cuid())
+  company      String
+  position     String
+  location     String?
+  startDate    String
+  endDate      String?
+  isCurrent    Boolean   @default(false)
+  description  String
+  achievements String?
+  technologies String?
+  orderIndex   Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  institution String
+  degree      String
+  field       String
+  grade       String?
+  startDate   String
+  endDate     String
+  highlights  String?
+  orderIndex  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  clientName  String
+  designation String
+  company     String
+  avatarUrl   String?
+  content     String
+  rating      Int      @default(5)
+  published   Boolean  @default(true)
+  orderIndex  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BlogCategory {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  slug      String     @unique
+  posts     BlogPost[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model BlogPost {
+  id             String        @id @default(cuid())
+  title          String
+  slug           String        @unique
+  excerpt        String
+  content        String
+  coverImage     String
+  published      Boolean       @default(true)
+  author         String        @default("Soumalyo Kundu")
+  readingTime    String        @default("5 min read")
+  tags           String
+  seoTitle       String?
+  seoDescription String?
+  categoryId     String
+  category       BlogCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([slug])
+  @@index([published])
+}
+
+model ContactMessage {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  subject     String
+  projectType String?
+  budget      String?
+  message     String
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isRead])
+}
+
+model SocialLink {
+  id         String   @id @default(cuid())
+  platform   String   @unique
+  url        String
+  iconName   String?
+  orderIndex Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model SiteSettings {
+  id              String   @id @default(cuid())
+  siteName        String   @default("Soumalyo Kundu | 3D Creative Developer")
+  siteTitle       String   @default("Soumalyo Kundu – 3D Animation & Full-Stack Developer")
+  siteDescription String   @default("Portfolio of Soumalyo Kundu, featuring cutting-edge 3D WebGL animations, procedural motion, and high-performance full-stack architectures.")
+  keywords        String   @default("3D Web Developer, Three.js, WebGL, Next.js, Animation, Blender, Full Stack")
+  primaryColor    String   @default("#00f2fe")
+  accentColor     String   @default("#00ff87")
+  customCss       String?
+  analyticsId     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
