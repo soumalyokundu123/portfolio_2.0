@@ -76,7 +76,12 @@ export default function ResumeSection({
             </p>
           </div>
 
-          <a href={resumeUrl || "/Soumalyo_Kundu_Resume.pdf"} target="_blank" download>
+          <a
+            href={resumeUrl || "/Soumalyo_Kundu_Resume.pdf"}
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Soumalyo_Kundu_Resume.pdf"
+          >
             <MagneticButton className="px-8 py-4 rounded-full text-xs font-bold tracking-wider uppercase bg-gradient-to-r from-cyan-400 via-sky-400 to-emerald-400 text-slate-950 shadow-[0_0_30px_rgba(0,242,254,0.45)] hover:shadow-[0_0_45px_rgba(0,255,135,0.65)] transition-all shrink-0">
               <span className="flex items-center space-x-2">
                 <Download className="w-4 h-4" />

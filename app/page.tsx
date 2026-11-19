@@ -10,58 +10,60 @@ import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import SkillsSection from "@/components/sections/SkillsSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
 import ResumeSection from "@/components/sections/ResumeSection";
-import TestimonialsSection from "@/components/sections/TestimonialsSection";
-import BlogSection from "@/components/sections/BlogSection";
 import ContactSection from "@/components/sections/ContactSection";
+import { FALLBACK_PROJECTS, FALLBACK_CATEGORIES } from "@/lib/fallbackData";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function HomePage() {
-  // Fetch real database records concurrently
-  const [
-    profile,
-    projects,
-    categories,
-    skillCategories,
-    experiences,
-    education,
-    testimonials,
-    blogPosts,
-    socialLinks,
-  ] = await Promise.all([
-    prisma.profile.findFirst(),
-    prisma.project.findMany({
-      where: { published: true },
-      include: { category: true, media: { orderBy: { orderIndex: "asc" } } },
-      orderBy: [{ featured: "desc" }, { orderIndex: "asc" }, { createdAt: "desc" }],
-    }),
-    prisma.projectCategory.findMany({
-      orderBy: { name: "asc" },
-    }),
-    prisma.skillCategory.findMany({
-      include: { skills: { orderBy: { orderIndex: "asc" } } },
-      orderBy: { orderIndex: "asc" },
-    }),
-    prisma.experience.findMany({
-      orderBy: [{ isCurrent: "desc" }, { orderIndex: "asc" }, { createdAt: "desc" }],
-    }),
-    prisma.education.findMany({
-      orderBy: { orderIndex: "asc" },
-    }),
-    prisma.testimonial.findMany({
-      where: { published: true },
-      orderBy: { orderIndex: "asc" },
-    }),
-    prisma.blogPost.findMany({
-      where: { published: true },
-      include: { category: true },
-      take: 3,
-      orderBy: { createdAt: "desc" },
-    }),
-    prisma.socialLink.findMany({
-      orderBy: { orderIndex: "asc" },
-    }),
-  ]);
+  let profile = null;
+  let projects: any[] = [];
+  let categories: any[] = [];
+  let skillCategories: any[] = [];
+  let experiences: any[] = [];
+  let education: any[] = [];
+  let socialLinks: any[] = [];
+
+  try {
+    const results = await Promise.all([
+      prisma.profile.findFirst(),
+      prisma.project.findMany({
+        where: { published: true },
+        include: { category: true, media: { orderBy: { orderIndex: "asc" } } },
+        orderBy: [{ featured: "desc" }, { orderIndex: "asc" }, { createdAt: "desc" }],
+      }),
+      prisma.projectCategory.findMany({
+        orderBy: { name: "asc" },
+      }),
+      prisma.skillCategory.findMany({
+        include: { skills: { orderBy: { orderIndex: "asc" } } },
+        orderBy: { orderIndex: "asc" },
+      }),
+      prisma.experience.findMany({
+        orderBy: [{ isCurrent: "desc" }, { orderIndex: "asc" }, { createdAt: "desc" }],
+      }),
+      prisma.education.findMany({
+        orderBy: { orderIndex: "asc" },
+      }),
+      prisma.socialLink.findMany({
+        orderBy: { orderIndex: "asc" },
+      }),
+    ]);
+
+    profile = results[0];
+    projects = results[1];
+    categories = results[2];
+    skillCategories = results[3];
+    experiences = results[4];
+    education = results[5];
+    socialLinks = results[6];
+  } catch (err) {
+    console.error("Database connection warning on HomePage:", err);
+  }
+
+  // Ensure projects and categories are always available even during DB cold-starts
+  const displayProjects = projects && projects.length > 0 ? projects : FALLBACK_PROJECTS;
+  const displayCategories = categories && categories.length > 0 ? categories : FALLBACK_CATEGORIES;
 
   return (
     <main className="min-h-screen bg-[#060709] text-white selection:bg-cyan-500 selection:text-black relative">
@@ -82,8 +84,8 @@ export default async function HomePage() {
 
       {/* Featured Projects with Live Category Filtering */}
       <FeaturedProjects
-        initialProjects={projects as any}
-        categories={categories as any}
+        initialProjects={displayProjects as any}
+        categories={displayCategories as any}
       />
 
       {/* Interactive Technical Skills */}
@@ -92,17 +94,11 @@ export default async function HomePage() {
       {/* Work Experience Timeline */}
       <ExperienceSection experiences={experiences as any} />
 
-      {/* Resume & Academic Education */}
+      {/* Resume & Academic Education with Verified PDF */}
       <ResumeSection
         education={education as any}
-        resumeUrl={profile?.resumeUrl}
+        resumeUrl={profile?.resumeUrl || "/Soumalyo_Kundu_Resume.pdf"}
       />
-
-      {/* Endorsements Carousel */}
-      <TestimonialsSection testimonials={testimonials as any} />
-
-      {/* Technical Blog */}
-      <BlogSection posts={blogPosts as any} />
 
       {/* Interactive Contact Form */}
       <ContactSection
