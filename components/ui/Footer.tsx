@@ -60,11 +60,6 @@ export default function Footer({
                 </Link>
               </li>
               <li>
-                <Link href="/#showcase" className="hover:text-cyan-400 transition-colors">
-                  System Architecture
-                </Link>
-              </li>
-              <li>
                 <Link href="/#about" className="hover:text-cyan-400 transition-colors">
                   Profile & Background
                 </Link>

@@ -80,8 +80,34 @@ async function main() {
   }
   console.log("✅ Software categories initialized.");
 
-  // 4. Exact Projects from Resume
+  // 4. Exact Projects from Resume & GitHub
   const projectsData = [
+    {
+      title: "AI Resume Roaster – ATS Resume Analyzer",
+      slug: "ai-resume-roaster-ats-checker",
+      tagline: "AI-powered ATS resume analyzer & roaster with PDF text extraction, skill gap evaluation, and Gemini API integration.",
+      overview:
+        "An AI-powered resume analysis and optimization platform that evaluates job applications for Applicant Tracking Systems (ATS). Users upload PDF resumes for automated text parsing via Multer & PDF-Parse, receive structured AI-driven feedback via Google's Gemini API, generate refined content suggestions, and track version histories through a secure JWT-authenticated React dashboard.",
+      creativeProcess:
+        "Architected the full-stack system with a responsive React.js (Vite) frontend and Node.js/Express.js backend. Implemented PDF parsing pipelines with Multer and PDF-Parse, structured JSON prompt schema validation using Zod, integrated Google Gemini API for deep contextual feedback and skill gap analysis, and deployed the frontend on Vercel and backend on Render with MongoDB Atlas.",
+      challenges:
+        "Parsing heterogeneous PDF resume layouts cleanly without loss of formatting and managing structured prompt validation with Gemini API.",
+      solutions:
+        "Implemented stream-based PDF extraction and Zod schema parsing for consistent AI output format with error boundaries and fallback suggestions.",
+      credits: "Full-Stack & AI Architecture: Soumalyo Kundu",
+      year: "2026",
+      client: "AI Career Tools",
+      duration: "1 Month",
+      thumbnail: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=1200&q=80",
+      videoPreview: null,
+      liveUrl: "https://frontend-pink-eight-99.vercel.app",
+      githubUrl: "https://github.com/soumalyokundu123/ai-resume-checker",
+      featured: true,
+      published: true,
+      orderIndex: 1,
+      categoryId: categories["ai-api-integrations"],
+      technologies: "React.js, Node.js, Express.js, MongoDB, Google Gemini API, JWT, Multer, PDF-Parse, Zod, Vite, Axios",
+    },
     {
       title: "AI Email Assistant – AI-Powered Reply Generator & Extension",
       slug: "ai-email-assistant-generator",
@@ -89,7 +115,7 @@ async function main() {
       overview:
         "A full-stack artificial intelligence application and browser extension that generates context-aware professional email responses tailored by prompt and tone. Integrated Google Gemini API via Spring WebClient with backend Spring Boot REST services, offering tone/length modulation, prompt refinement, and automated proofreading with an instant one-click copy popup.",
       creativeProcess:
-        "Architected the backend using Java 17, Spring Boot, and reactive Spring WebClient to handle asynchronous streaming responses from Google Gemini API. Developed the frontend Chrome extension in React with Material UI, implementing stateful tone controls, clipboard synchronization, and sub-100ms UI response times.",
+        "Architected the backend using Java 17, Spring Boot, and reactive Spring WebClient to handle asynchronous streaming responses from Google Gemini API. Developed the frontend in React with Material UI, implementing stateful tone controls, clipboard synchronization, and sub-100ms UI response times.",
       challenges:
         "Handling streaming token buffers and maintaining API rate limits while ensuring contextual prompt accuracy across varying email thread lengths.",
       solutions:
@@ -100,11 +126,11 @@ async function main() {
       duration: "2 Months",
       thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80",
       videoPreview: null,
-      liveUrl: "https://ai-email-assistant-demo.vercel.app",
-      githubUrl: "https://github.com/soumalyokundu123/AI-Email-Assistant",
+      liveUrl: "https://email-writer-application-mv1d.vercel.app/",
+      githubUrl: "https://github.com/soumalyokundu123/email-writer-application",
       featured: true,
       published: true,
-      orderIndex: 1,
+      orderIndex: 2,
       categoryId: categories["ai-api-integrations"],
       technologies: "Java, Spring Boot, React, Chrome Extension, Spring WebClient, Gemini API, Material UI, REST APIs",
     },
@@ -127,10 +153,10 @@ async function main() {
       thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
       videoPreview: null,
       liveUrl: "https://internhub-demo.vercel.app",
-      githubUrl: "https://github.com/soumalyokundu123/InternHub-Backend",
+      githubUrl: "https://github.com/soumalyokundu123/internSite",
       featured: true,
       published: true,
-      orderIndex: 2,
+      orderIndex: 3,
       categoryId: categories["backend-systems"],
       technologies: "Java 17, Spring Boot, Spring Security, JWT, PostgreSQL, Hibernate, JPA, Swagger, Docker",
     },
@@ -153,10 +179,10 @@ async function main() {
       thumbnail: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
       videoPreview: null,
       liveUrl: "https://civiclens-app.vercel.app",
-      githubUrl: "https://github.com/soumalyokundu123/civiclens",
+      githubUrl: "https://github.com/soumalyokundu123/CivicLens",
       featured: true,
       published: true,
-      orderIndex: 3,
+      orderIndex: 4,
       categoryId: categories["full-stack-web"],
       technologies: "Next.js, Express.js, MongoDB, Node.js, Tailwind CSS, REST APIs",
     },
@@ -182,7 +208,7 @@ async function main() {
       githubUrl: "https://github.com/soumalyokundu123",
       featured: true,
       published: true,
-      orderIndex: 4,
+      orderIndex: 5,
       categoryId: categories["enterprise-microservices"],
       technologies: "ASP.NET Core, C#, Entity Framework Core, PostgreSQL, JWT Authentication, Angular, REST APIs",
     },
@@ -208,7 +234,7 @@ async function main() {
       githubUrl: "https://github.com/soumalyokundu123",
       featured: true,
       published: true,
-      orderIndex: 5,
+      orderIndex: 6,
       categoryId: categories["enterprise-microservices"],
       technologies: "Java 17, Spring Boot, Spring Security, JWT, PostgreSQL, Hibernate, JPA, React Native Integration",
     },

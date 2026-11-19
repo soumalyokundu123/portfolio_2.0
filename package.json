@@ -4,13 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate --schema=prisma/schema.prisma && next build",
     "start": "next start",
     "lint": "next lint",
-    "db:push": "prisma db push --schema=prisma/schema.sqlite.prisma",
-    "db:push:pg": "prisma db push --schema=prisma/schema.prisma",
+    "db:push": "prisma db push --schema=prisma/schema.prisma",
     "db:seed": "node prisma/seed.js",
-    "postinstall": "prisma generate --schema=prisma/schema.sqlite.prisma"
+    "postinstall": "prisma generate --schema=prisma/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

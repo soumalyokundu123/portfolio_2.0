@@ -7,7 +7,6 @@ import ScrollProgress from "@/components/ui/ScrollProgress";
 import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
 import FeaturedProjects from "@/components/sections/FeaturedProjects";
-import ShowreelSection from "@/components/sections/ShowreelSection";
 import SkillsSection from "@/components/sections/SkillsSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
 import ResumeSection from "@/components/sections/ResumeSection";
@@ -85,12 +84,6 @@ export default async function HomePage() {
       <FeaturedProjects
         initialProjects={projects as any}
         categories={categories as any}
-      />
-
-      {/* Cinematic Showreel Player */}
-      <ShowreelSection
-        videoUrl={profile?.showreelUrl}
-        posterUrl={profile?.showreelPoster}
       />
 
       {/* Interactive Technical Skills */}
