@@ -29,7 +29,6 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@next/swc-win32-x64-msvc": "^16.4.6",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.17.16",
     "@types/react": "^18.3.18",
